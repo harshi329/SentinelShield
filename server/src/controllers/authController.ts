@@ -40,7 +40,10 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       isVerified: false,
     });
 
-    await sendOTPEmail(email, name, otp, "login");
+    // Send email in background — don't block the response
+    sendOTPEmail(email, name, otp, "login").catch(err =>
+      console.error("Registration email error:", err)
+    );
 
     res.status(201).json({
       success: true,
@@ -72,7 +75,10 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     user.otpType   = "login";
     await user.save();
 
-    await sendOTPEmail(email, user.name, otp, "login");
+    // Send email in background — don't block the response
+    sendOTPEmail(email, user.name, otp, "login").catch(err =>
+      console.error("Login email error:", err)
+    );
 
     res.status(200).json({
       success: true,
@@ -144,7 +150,9 @@ export const resendOTP = async (req: Request, res: Response): Promise<void> => {
     user.otpType    = "login";
     await user.save();
 
-    await sendOTPEmail(user.email, user.name, otp, "login");
+    sendOTPEmail(user.email, user.name, otp, "login").catch(err =>
+      console.error("Resend email error:", err)
+    );
 
     res.status(200).json({ success: true, message: "New OTP sent." });
   } catch (err) {
@@ -176,7 +184,9 @@ export const forgotPassword = async (req: Request, res: Response): Promise<void>
     user.otpType    = "change-password";
     await user.save();
 
-    await sendOTPEmail(user.email, user.name, otp, "change-password");
+    sendOTPEmail(user.email, user.name, otp, "change-password").catch(err =>
+      console.error("Forgot password email error:", err)
+    );
 
     res.status(200).json({
       success: true,
