@@ -4,7 +4,7 @@ import axios from "axios";
 import {
   Bell, Shield, ScanLine, Palette, Server, Save, CheckCircle,
   Lock, Eye, EyeOff, Sliders, Mail, User, KeyRound, Loader2,
-  AlertTriangle, Activity, Wifi, Database, Cpu, RefreshCw,
+  AlertTriangle, Activity, Database, Cpu, RefreshCw,
   ChevronRight, Zap, Globe, Clock,
 } from "lucide-react";
 import { useTheme } from "../contexts/themeContextCore";
