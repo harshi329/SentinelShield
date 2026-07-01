@@ -1,5 +1,45 @@
 import nodemailer from "nodemailer";
+import https from "https";
 
+// ── Send via Brevo HTTP API (works on Render free tier) ──────────────────────
+const sendViaBrevoAPI = (to: string, subject: string, html: string): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    const apiKey = process.env.BREVO_API_KEY;
+    if (!apiKey) { reject(new Error("BREVO_API_KEY not set")); return; }
+
+    const payload = JSON.stringify({
+      sender: { name: "SentinelShield Security", email: process.env.EMAIL_USER },
+      to: [{ email: to }],
+      subject,
+      htmlContent: html,
+    });
+
+    const req = https.request({
+      hostname: "api.brevo.com",
+      path: "/v3/smtp/email",
+      method: "POST",
+      headers: {
+        "api-key": apiKey,
+        "Content-Type": "application/json",
+        "Content-Length": Buffer.byteLength(payload),
+      },
+    }, (res) => {
+      if (res.statusCode && res.statusCode >= 200 && res.statusCode < 300) {
+        resolve();
+      } else {
+        let body = "";
+        res.on("data", (d) => body += d);
+        res.on("end", () => reject(new Error(`Brevo API error ${res.statusCode}: ${body}`)));
+      }
+    });
+
+    req.on("error", reject);
+    req.write(payload);
+    req.end();
+  });
+};
+
+// ── Fallback SMTP transporter ────────────────────────────────────────────────
 const getTransporter = () =>
   nodemailer.createTransport({
     host: process.env.SMTP_HOST || "smtp-relay.brevo.com",
@@ -79,12 +119,7 @@ export const sendOTPEmail = async (
     </div>
   `;
 
-  await getTransporter().sendMail({
-    from: `"SentinelShield Security" <${process.env.EMAIL_USER}>`,
-    to,
-    subject,
-    html: buildEmail(title, body),
-  });
+  await sendViaBrevoAPI(to, subject, buildEmail(title, body));
 };
 
 export const sendPasswordChangedEmail = async (
@@ -105,10 +140,5 @@ export const sendPasswordChangedEmail = async (
     </div>
   `;
 
-  await getTransporter().sendMail({
-    from: `"SentinelShield Security" <${process.env.EMAIL_USER}>`,
-    to,
-    subject: "SentinelShield — Password Changed",
-    html: buildEmail("Password Changed", body),
-  });
+  await sendViaBrevoAPI(to, "SentinelShield — Password Changed", buildEmail("Password Changed", body));
 };
