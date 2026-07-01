@@ -282,8 +282,8 @@ export default function Login() {
                       onChange={setPassword}
                       onKeyDown={(e) => e.key === "Enter" && handleAuth()}
                       suffix={
-                        <button type="button" onClick={() => setShowPass(!showPass)} className="text-slate-400 hover:text-slate-200">
-                          {showPass ? <EyeOff size={15} /> : <Eye size={15} />}
+                        <button type="button" onClick={() => setShowPass(!showPass)} className="rounded-lg p-1 text-slate-400 hover:text-white hover:bg-white/10 transition-all">
+                          {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
                         </button>
                       }
                     />
@@ -504,8 +504,8 @@ export default function Login() {
                     onChange={setNewPassword}
                     onKeyDown={(e) => e.key === "Enter" && handleForgotReset()}
                     suffix={
-                      <button type="button" onClick={() => setShowNewPass(!showNewPass)} className="text-slate-400 hover:text-slate-200">
-                        {showNewPass ? <EyeOff size={15} /> : <Eye size={15} />}
+                      <button type="button" onClick={() => setShowNewPass(!showNewPass)} className="rounded-lg p-1 text-slate-400 hover:text-white hover:bg-white/10 transition-all">
+                        {showNewPass ? <EyeOff size={16} /> : <Eye size={16} />}
                       </button>
                     }
                   />
