@@ -562,9 +562,9 @@ const InputField = ({
       value={value}
       onChange={(e) => onChange(e.target.value)}
       onKeyDown={onKeyDown}
-      className="flex-1 bg-transparent text-sm text-white placeholder-slate-500 outline-none [&::-ms-reveal]:hidden [&::-ms-clear]:hidden [&::-webkit-credentials-auto-fill-button]:hidden"
+      className="flex-1 min-w-0 bg-transparent text-sm text-white placeholder-slate-500 outline-none [&::-ms-reveal]:hidden [&::-ms-clear]:hidden [&::-webkit-credentials-auto-fill-button]:hidden"
     />
-    {suffix}
+    {suffix && <span className="shrink-0 ml-2">{suffix}</span>}
   </div>
 );
 
