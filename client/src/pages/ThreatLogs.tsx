@@ -436,7 +436,7 @@ const ThreatLogs = () => {
         {/* Report Summary */}
         {scans.length > 0 && (
           <div className="mt-8 rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 p-6 shadow-sm">
-            <div className="flex items-center justify-between mb-5">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-5">
               <div>
                 <h2 className="font-semibold text-slate-900 dark:text-white">Practical Report Summary</h2>
                 <p className="text-xs text-slate-400 mt-0.5">Auto-generated for practical submission</p>
@@ -444,7 +444,7 @@ const ThreatLogs = () => {
               <button
                 onClick={() => setShowModal(true)}
                 disabled={filteredScans.length === 0}
-                className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-md shadow-sky-500/20 hover:shadow-sky-500/40 transition-all disabled:opacity-40"
+                className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 px-4 py-2.5 text-xs font-semibold text-white shadow-md shadow-sky-500/20 hover:shadow-sky-500/40 transition-all disabled:opacity-40 shrink-0"
               >
                 <Lock size={12} /> Export Encrypted PDF
               </button>

@@ -38,11 +38,11 @@ const Section = ({
         <Icon size={18} className="text-white" />
       </div>
       <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <h2 className="font-semibold text-slate-900 dark:text-white">{title}</h2>
           {badge && <span className="rounded-full bg-sky-500/10 px-2 py-0.5 text-[10px] font-semibold text-sky-500 uppercase tracking-wide">{badge}</span>}
         </div>
-        <p className="text-xs text-slate-400">{description}</p>
+        <p className="text-xs text-slate-400 mt-0.5">{description}</p>
       </div>
     </div>
     <div className="px-6 py-5">{children}</div>
