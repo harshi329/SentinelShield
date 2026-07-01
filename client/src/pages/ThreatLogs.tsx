@@ -330,72 +330,107 @@ const ThreatLogs = () => {
           </select>
         </div>
 
-        {/* Logs Table */}
-        <div className="mt-5 overflow-x-auto overflow-hidden rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 shadow-sm">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-slate-100 dark:border-white/10 text-xs font-semibold uppercase tracking-wider text-slate-400">
-                <th className="px-5 py-4 text-left">Time</th>
-                <th className="px-5 py-4 text-left">URL</th>
-                <th className="hidden sm:table-cell px-5 py-4 text-left">IP Address</th>
-                <th className="hidden sm:table-cell px-5 py-4 text-left">Threat Type</th>
-                <th className="px-5 py-4 text-left">Risk</th>
-                <th className="px-5 py-4 text-left">Status</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-white/5">
-              {filteredScans.length ? filteredScans.map((scan) => (
-                <>
-                  <tr key={scan._id} onClick={() => setExpanded(expanded === scan._id ? null : scan._id)}
-                    className="cursor-pointer hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
-                    <td className="whitespace-nowrap px-5 py-4 text-xs text-slate-500">{new Date(scan.createdAt).toLocaleString()}</td>
-                    <td className="max-w-[220px] truncate px-5 py-4 text-sm text-slate-900 dark:text-white">{scan.url}</td>
-                    <td className="hidden sm:table-cell px-5 py-4 font-mono text-xs text-slate-600 dark:text-slate-300">{scan.ipAddress}</td>
-                    <td className="hidden sm:table-cell px-5 py-4 text-sm text-slate-600 dark:text-slate-300">{scan.threatType}</td>
-                    <td className="px-5 py-4">
-                      <div className="flex items-center gap-2">
-                        <div className="h-1.5 w-14 overflow-hidden rounded-full bg-slate-100 dark:bg-white/10">
-                          <div className={`h-1.5 rounded-full ${scan.riskScore >= 60 ? "bg-red-500" : scan.riskScore >= 30 ? "bg-amber-500" : "bg-emerald-500"}`} style={{ width: `${scan.riskScore}%` }} />
-                        </div>
-                        <span className="text-xs font-medium text-slate-700 dark:text-slate-300">{scan.riskScore}</span>
-                      </div>
-                    </td>
-                    <td className="px-5 py-4">
-                      <span className={`rounded-full px-3 py-1 text-xs font-medium ${threatBadge[scan.threatLevel]}`}>{scan.threatLevel}</span>
-                    </td>
-                  </tr>
-                  {expanded === scan._id && (
-                    <tr key={`${scan._id}-detail`} className="bg-slate-50 dark:bg-white/5">
-                      <td colSpan={6} className="px-5 py-5">
-                        <div className="grid gap-5 md:grid-cols-3">
-                          <div>
-                            <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Rules Triggered</p>
-                            {scan.detectionRules.length ? scan.detectionRules.map((r) => (
-                              <p key={r} className="text-xs text-red-500 mb-1">• {r}</p>
-                            )) : <p className="text-xs text-slate-400">None</p>}
+        {/* Logs — Cards on mobile, Table on desktop */}
+        <div className="mt-5">
+          {/* Mobile card view */}
+          <div className="block sm:hidden space-y-3">
+            {filteredScans.length ? filteredScans.map((scan) => (
+              <div key={scan._id} onClick={() => setExpanded(expanded === scan._id ? null : scan._id)}
+                className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 p-4 shadow-sm cursor-pointer">
+                <div className="flex items-start justify-between gap-2 mb-2">
+                  <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${threatBadge[scan.threatLevel]}`}>{scan.threatLevel}</span>
+                  <span className="text-xs text-slate-400 shrink-0">{new Date(scan.createdAt).toLocaleTimeString()}</span>
+                </div>
+                <p className="text-sm text-slate-800 dark:text-slate-200 truncate mb-2">{scan.url}</p>
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-1.5">
+                    <div className="h-1.5 w-16 overflow-hidden rounded-full bg-slate-100 dark:bg-white/10">
+                      <div className={`h-1.5 rounded-full ${scan.riskScore >= 60 ? "bg-red-500" : scan.riskScore >= 30 ? "bg-amber-500" : "bg-emerald-500"}`} style={{ width: `${scan.riskScore}%` }} />
+                    </div>
+                    <span className="text-xs text-slate-500">{scan.riskScore}</span>
+                  </div>
+                  <span className="text-xs text-slate-400">{scan.threatType}</span>
+                </div>
+                {expanded === scan._id && (
+                  <div className="mt-3 pt-3 border-t border-slate-100 dark:border-white/10 space-y-2">
+                    <p className="text-xs text-slate-500"><span className="font-semibold">IP:</span> {scan.ipAddress}</p>
+                    {scan.detectionRules.length > 0 && <p className="text-xs text-red-500">Rules: {scan.detectionRules.join(", ")}</p>}
+                    <p className="text-xs text-slate-500">{scan.recommendation}</p>
+                  </div>
+                )}
+              </div>
+            )) : (
+              <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 py-16 text-center text-sm text-slate-400">No threat logs found.</div>
+            )}
+          </div>
+
+          {/* Desktop table view */}
+          <div className="hidden sm:block overflow-hidden rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 shadow-sm">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-slate-100 dark:border-white/10 text-xs font-semibold uppercase tracking-wider text-slate-400">
+                  <th className="px-5 py-4 text-left">Time</th>
+                  <th className="px-5 py-4 text-left">URL</th>
+                  <th className="px-5 py-4 text-left">IP Address</th>
+                  <th className="px-5 py-4 text-left">Threat Type</th>
+                  <th className="px-5 py-4 text-left">Risk</th>
+                  <th className="px-5 py-4 text-left">Status</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100 dark:divide-white/5">
+                {filteredScans.length ? filteredScans.map((scan) => (
+                  <>
+                    <tr key={scan._id} onClick={() => setExpanded(expanded === scan._id ? null : scan._id)}
+                      className="cursor-pointer hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
+                      <td className="whitespace-nowrap px-5 py-4 text-xs text-slate-500">{new Date(scan.createdAt).toLocaleString()}</td>
+                      <td className="max-w-[220px] truncate px-5 py-4 text-sm text-slate-900 dark:text-white">{scan.url}</td>
+                      <td className="px-5 py-4 font-mono text-xs text-slate-600 dark:text-slate-300">{scan.ipAddress}</td>
+                      <td className="px-5 py-4 text-sm text-slate-600 dark:text-slate-300">{scan.threatType}</td>
+                      <td className="px-5 py-4">
+                        <div className="flex items-center gap-2">
+                          <div className="h-1.5 w-14 overflow-hidden rounded-full bg-slate-100 dark:bg-white/10">
+                            <div className={`h-1.5 rounded-full ${scan.riskScore >= 60 ? "bg-red-500" : scan.riskScore >= 30 ? "bg-amber-500" : "bg-emerald-500"}`} style={{ width: `${scan.riskScore}%` }} />
                           </div>
-                          <div>
-                            <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Evidence</p>
-                            {scan.evidence.length ? scan.evidence.map((e) => (
-                              <p key={e} className="text-xs text-slate-600 dark:text-slate-300 mb-1">• {e}</p>
-                            )) : <p className="text-xs text-slate-400">No evidence</p>}
-                          </div>
-                          <div>
-                            <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Recommendation</p>
-                            <p className="text-xs text-slate-600 dark:text-slate-300">{scan.recommendation || "—"}</p>
-                            <p className="mt-3 text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Scan Mode</p>
-                            <p className="text-xs text-sky-500 font-medium">{scan.scanMode}</p>
-                          </div>
+                          <span className="text-xs font-medium text-slate-700 dark:text-slate-300">{scan.riskScore}</span>
                         </div>
                       </td>
+                      <td className="px-5 py-4">
+                        <span className={`rounded-full px-3 py-1 text-xs font-medium ${threatBadge[scan.threatLevel]}`}>{scan.threatLevel}</span>
+                      </td>
                     </tr>
-                  )}
-                </>
-              )) : (
-                <tr><td colSpan={6} className="py-16 text-center text-sm text-slate-400">No threat logs found.</td></tr>
-              )}
-            </tbody>
-          </table>
+                    {expanded === scan._id && (
+                      <tr key={`${scan._id}-detail`} className="bg-slate-50 dark:bg-white/5">
+                        <td colSpan={6} className="px-5 py-5">
+                          <div className="grid gap-5 md:grid-cols-3">
+                            <div>
+                              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Rules Triggered</p>
+                              {scan.detectionRules.length ? scan.detectionRules.map((r) => (
+                                <p key={r} className="text-xs text-red-500 mb-1">• {r}</p>
+                              )) : <p className="text-xs text-slate-400">None</p>}
+                            </div>
+                            <div>
+                              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Evidence</p>
+                              {scan.evidence.length ? scan.evidence.map((e) => (
+                                <p key={e} className="text-xs text-slate-600 dark:text-slate-300 mb-1">• {e}</p>
+                              )) : <p className="text-xs text-slate-400">No evidence</p>}
+                            </div>
+                            <div>
+                              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Recommendation</p>
+                              <p className="text-xs text-slate-600 dark:text-slate-300">{scan.recommendation || "—"}</p>
+                              <p className="mt-3 text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Scan Mode</p>
+                              <p className="text-xs text-sky-500 font-medium">{scan.scanMode}</p>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </>
+                )) : (
+                  <tr><td colSpan={6} className="py-16 text-center text-sm text-slate-400">No threat logs found.</td></tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         {/* Report Summary */}

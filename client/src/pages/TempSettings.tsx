@@ -265,9 +265,9 @@ const Settings = () => {
             <div className="space-y-6">
               <div className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10">
                 <CyberAvatar avatarId={avatarId} size="xl" />
-                <div>
-                  <p className="text-lg font-bold text-slate-900 dark:text-white">{user?.name}</p>
-                  <p className="text-sm text-slate-400">{user?.email}</p>
+                <div className="min-w-0 flex-1">
+                  <p className="text-lg font-bold text-slate-900 dark:text-white truncate">{user?.name}</p>
+                  <p className="text-sm text-slate-400 truncate">{user?.email}</p>
                   <span className="mt-1.5 inline-flex items-center gap-1.5 rounded-full bg-sky-500/10 px-2.5 py-0.5 text-xs font-medium text-sky-500">
                     <Shield size={10} /> Security Analyst
                   </span>

@@ -589,7 +589,7 @@ const OtpBoxes = ({
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: i * 0.06 }}
-        className={`h-12 w-12 rounded-xl border-2 bg-slate-800 text-center text-lg font-bold text-white outline-none transition-all ${
+        className={`h-11 w-11 sm:h-12 sm:w-12 rounded-xl border-2 bg-slate-800 text-center text-lg font-bold text-white outline-none transition-all ${
           digit
             ? "border-sky-500 bg-sky-500/10 shadow-md shadow-sky-500/20"
             : "border-slate-600 focus:border-sky-500"

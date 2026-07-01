@@ -136,11 +136,11 @@ const Dashboard = () => {
         </div>
 
         {/* KPI Cards */}
-        <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-6 grid grid-cols-2 gap-3 xl:grid-cols-4">
           {kpiCards.map(({ title, value, sub, icon: Icon, gradient, glow }) => (
             <div
               key={title}
-              className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${gradient} p-6 shadow-xl ${glow}`}
+              className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${gradient} p-4 lg:p-6 shadow-xl ${glow}`}
             >
               {/* Background decoration */}
               <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/10" />
@@ -153,7 +153,7 @@ const Dashboard = () => {
                     <Icon size={18} className="text-white" />
                   </div>
                 </div>
-                <p className="mt-4 text-4xl font-bold text-white">{value}</p>
+                <p className="mt-2 text-2xl lg:text-4xl font-bold text-white">{value}</p>
                 <p className="mt-1 text-xs text-white/70">{sub}</p>
               </div>
             </div>
