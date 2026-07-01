@@ -55,7 +55,7 @@ app.use(
 // ==========================================
 // Health Check
 // ==========================================
-app.get("/", (_req, res) => {
+app.get("/api/health", (_req, res) => {
   res.status(200).json({
     success: true,
     message: "SentinelShield API Running",
