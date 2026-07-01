@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family:
+    Inter,
+    system-ui,
+    sans-serif;
+}
+
+* {
+  transition:
+    background-color 250ms ease,
+    color 250ms ease,
+    border-color 250ms ease;
+}
+
+/* Dark SOC Mode */
+.dark body {
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(59, 130, 246, 0.15),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(14, 165, 233, 0.12),
+      transparent 40%
+    ),
+    #020617;
+}
+
+/* Warm Workspace Mode */
+.light body {
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(251, 191, 36, 0.12),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at bottom left,
+      rgba(249, 115, 22, 0.08),
+      transparent 35%
+    ),
+    #f8f5f0;
+}
+@layer components {
+
+  .glass-card {
+    @apply
+    rounded-2xl
+    border
+    backdrop-blur-xl;
+  }
+
+  .dark .glass-card {
+    @apply
+    bg-white/5
+    border-white/10;
+  }
+
+  .light .glass-card {
+    @apply
+    bg-white/70
+    border-stone-200;
+  }
+
+}
+.metric-value {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+.metric-subtitle {
+  font-size: 13px;
+}
+.event-time {
+  font-family: monospace;
+}
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+}

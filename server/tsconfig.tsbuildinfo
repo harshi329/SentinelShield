@@ -1,0 +1,1 @@
+{"root":["./src/app.ts","./src/server.ts","./src/config/db.ts","./src/controllers/scancontroller.ts","./src/middleware/errorhandler.ts","./src/middleware/validate.ts","./src/models/scan.ts","./src/routes/scanroutes.ts","./src/services/detectionengine.ts","./src/services/scanservice.ts","./src/types/scan.ts","./src/validators/scan.validator.ts"],"version":"5.7.3"}
