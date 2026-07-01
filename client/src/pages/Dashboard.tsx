@@ -95,10 +95,10 @@ const Dashboard = () => {
 
   return (
     <MainLayout>
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 p-8">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 p-4 lg:p-8">
 
         {/* Header */}
-        <div className="flex items-start justify-between">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-sky-500 to-blue-600 shadow-lg shadow-sky-500/30">
@@ -115,7 +115,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             {/* Live indicator */}
             <div className="flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-2">
               <span className="relative flex h-2 w-2">
@@ -198,7 +198,7 @@ const Dashboard = () => {
                         <td className="whitespace-nowrap px-6 py-4 text-xs text-slate-500">
                           {new Date(scan.createdAt).toLocaleTimeString()}
                         </td>
-                        <td className="max-w-[180px] truncate px-6 py-4 text-sm text-slate-800 dark:text-slate-200">
+                        <td className="max-w-[120px] sm:max-w-[180px] truncate px-6 py-4 text-sm text-slate-800 dark:text-slate-200">
                           {scan.url}
                         </td>
                         <td className="px-6 py-4">

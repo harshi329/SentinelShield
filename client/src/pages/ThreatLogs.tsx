@@ -264,17 +264,17 @@ const ThreatLogs = () => {
         />
       )}
 
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 p-8">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 p-4 lg:p-8">
 
         {/* Header */}
-        <div className="flex items-start justify-between">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Threat Logs</h1>
             <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
               View detected threats, scan history, and export encrypted reports.
             </p>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row gap-2">
             <button
               onClick={() => exportCSV(filteredScans)}
               disabled={filteredScans.length === 0}
@@ -298,7 +298,7 @@ const ThreatLogs = () => {
         </div>
 
         {/* Summary Cards */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-4 gap-5">
+        <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-5">
           {[
             { label: "Blocked / High Risk", value: summary?.blockedScans || 0, border: "border-red-500/20", bg: "bg-red-500/5", color: "text-red-500" },
             { label: "Suspicious",          value: scans.filter((s) => s.threatLevel === "Suspicious").length, border: "border-orange-500/20", bg: "bg-orange-500/5", color: "text-orange-500" },
@@ -313,7 +313,7 @@ const ThreatLogs = () => {
         </div>
 
         {/* Search & Filter */}
-        <div className="mt-6 flex gap-3">
+        <div className="mt-6 flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
             <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
@@ -331,14 +331,14 @@ const ThreatLogs = () => {
         </div>
 
         {/* Logs Table */}
-        <div className="mt-5 overflow-hidden rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 shadow-sm">
+        <div className="mt-5 overflow-x-auto overflow-hidden rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 shadow-sm">
           <table className="w-full">
             <thead>
               <tr className="border-b border-slate-100 dark:border-white/10 text-xs font-semibold uppercase tracking-wider text-slate-400">
                 <th className="px-5 py-4 text-left">Time</th>
                 <th className="px-5 py-4 text-left">URL</th>
-                <th className="px-5 py-4 text-left">IP Address</th>
-                <th className="px-5 py-4 text-left">Threat Type</th>
+                <th className="hidden sm:table-cell px-5 py-4 text-left">IP Address</th>
+                <th className="hidden sm:table-cell px-5 py-4 text-left">Threat Type</th>
                 <th className="px-5 py-4 text-left">Risk</th>
                 <th className="px-5 py-4 text-left">Status</th>
               </tr>
@@ -350,8 +350,8 @@ const ThreatLogs = () => {
                     className="cursor-pointer hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
                     <td className="whitespace-nowrap px-5 py-4 text-xs text-slate-500">{new Date(scan.createdAt).toLocaleString()}</td>
                     <td className="max-w-[220px] truncate px-5 py-4 text-sm text-slate-900 dark:text-white">{scan.url}</td>
-                    <td className="px-5 py-4 font-mono text-xs text-slate-600 dark:text-slate-300">{scan.ipAddress}</td>
-                    <td className="px-5 py-4 text-sm text-slate-600 dark:text-slate-300">{scan.threatType}</td>
+                    <td className="hidden sm:table-cell px-5 py-4 font-mono text-xs text-slate-600 dark:text-slate-300">{scan.ipAddress}</td>
+                    <td className="hidden sm:table-cell px-5 py-4 text-sm text-slate-600 dark:text-slate-300">{scan.threatType}</td>
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-2">
                         <div className="h-1.5 w-14 overflow-hidden rounded-full bg-slate-100 dark:bg-white/10">

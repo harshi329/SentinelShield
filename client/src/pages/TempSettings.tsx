@@ -238,7 +238,7 @@ const Settings = () => {
       <div className="min-h-screen bg-slate-50 dark:bg-slate-950 p-6 lg:p-8">
 
         {/* ── Header ──────────────────────────────────────────────────────── */}
-        <div className="flex items-start justify-between mb-8">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Settings</h1>
             <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
@@ -246,7 +246,7 @@ const Settings = () => {
             </p>
           </div>
           {/* System health pill */}
-          <div className={`flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold ${
+          <div className={`hidden sm:flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold ${
             onlineCount === services.length
               ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-500"
               : onlineCount === 0

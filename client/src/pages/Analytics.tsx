@@ -57,11 +57,11 @@ const Analytics = () => {
 
   return (
     <MainLayout>
-      <div className="p-8">
+      <div className="p-4 lg:p-8">
 
         {/* Header */}
         <div>
-          <h1 className="text-5xl font-bold text-slate-900 dark:text-white">
+          <h1 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white">
             Analytics
           </h1>
           <p className="mt-2 text-slate-500 dark:text-slate-400">

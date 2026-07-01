@@ -134,10 +134,10 @@ const Analyzer = () => {
 
   return (
     <MainLayout>
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 p-6 lg:p-8">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 p-4 lg:p-8">
 
         {/* ── Page Header ─────────────────────────────────── */}
-        <div className="flex items-start justify-between mb-8">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between mb-6">
           <div className="flex items-center gap-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 shadow-lg shadow-sky-500/30">
               <Shield size={24} className="text-white" />
