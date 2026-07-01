@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import path from "path";
 import errorHandler from "./middleware/errorHandler";
 import scanRoutes from "./routes/scanRoutes";
 import reportRoutes from "./routes/reportRoutes";
@@ -70,14 +71,27 @@ app.use("/api/report", reportRoutes);
 app.use("/api/auth", authRoutes);
 
 // ==========================================
-// 404 Handler
+// Serve React Frontend in Production
 // ==========================================
-app.use((_req, res, _next) => {
-  res.status(404).json({
-    success: false,
-    message: "Route Not Found",
+if (process.env.NODE_ENV === "production") {
+  const clientBuildPath = path.join(__dirname, "../../client/dist");
+  app.use(express.static(clientBuildPath));
+
+  // All non-API routes return the React app (client-side routing)
+  app.get("*", (_req, res) => {
+    res.sendFile(path.join(clientBuildPath, "index.html"));
   });
-});
+} else {
+  // ==========================================
+  // 404 Handler (dev only — frontend is on Vite)
+  // ==========================================
+  app.use((_req, res, _next) => {
+    res.status(404).json({
+      success: false,
+      message: "Route Not Found",
+    });
+  });
+}
 
 // ==========================================
 // Error Handler (must be last)
