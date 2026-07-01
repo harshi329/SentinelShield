@@ -32,10 +32,13 @@ app.use(
   cors({
     origin: (origin, callback) => {
       // Allow server-to-server requests (no origin) and allowed origins
+      // In production with same-domain deployment, origin is often undefined
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        callback(new Error(`CORS: origin ${origin} not allowed`));
+        // Log but don't crash — just deny gracefully
+        console.warn(`CORS: origin ${origin} not in allowlist`);
+        callback(null, false);
       }
     },
     credentials: true,
