@@ -325,11 +325,12 @@ const Settings = () => {
             <AnimatePresence mode="wait">
               {pwStep === "idle" && (
                 <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                  <div className="flex items-center gap-3 p-4 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 mb-4">
-                    <Mail size={16} className="text-violet-400 shrink-0" />
-                    <p className="text-sm text-slate-500 dark:text-slate-400 min-w-0">
-                      A one-time password will be sent to <span className="text-sky-400 font-semibold break-all">{user?.email}</span>
-                    </p>
+                  <div className="p-4 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 mb-4">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Mail size={14} className="text-violet-400 shrink-0" />
+                      <p className="text-sm text-slate-500 dark:text-slate-400">OTP will be sent to:</p>
+                    </div>
+                    <p className="text-sm font-semibold text-sky-400 break-all pl-6">{user?.email}</p>
                   </div>
                   <AnimatePresence>{pwError && <ErrBanner msg={pwError} />}</AnimatePresence>
                   <button onClick={handleRequestPwOtp} disabled={pwLoading}
