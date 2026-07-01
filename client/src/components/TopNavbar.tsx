@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { LogOut, Settings, ChevronDown, Shield } from "lucide-react";
+import { LogOut, Settings, ChevronDown, Shield, Menu, User } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import { useAuth } from "../contexts/AuthContext";
 import CyberAvatar from "./CyberAvatar";
 
-const TopNavbar = () => {
+const TopNavbar = ({ onMenuClick }: { onMenuClick?: () => void }) => {
   const { user, logout, avatarId } = useAuth();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -27,12 +27,21 @@ const TopNavbar = () => {
   };
 
   return (
-    <header className="flex items-center justify-between border-b border-slate-200 dark:border-white/10 px-6 py-3 bg-white/80 dark:bg-slate-950/60 backdrop-blur-xl">
+    <header className="flex items-center justify-between border-b border-slate-200 dark:border-white/10 px-4 py-3 bg-white/80 dark:bg-slate-950/60 backdrop-blur-xl">
 
-      {/* Left — title */}
-      <div>
-        <h2 className="text-base font-bold text-slate-900 dark:text-white">SentinelShield</h2>
-        <p className="text-[10px] text-slate-500 dark:text-slate-400">Advanced Security Platform</p>
+      {/* Left — hamburger (mobile) + title */}
+      <div className="flex items-center gap-3">
+        <button
+          onClick={onMenuClick}
+          className="rounded-xl p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors lg:hidden"
+          aria-label="Open menu"
+        >
+          <Menu size={20} />
+        </button>
+        <div className="hidden sm:block">
+          <h2 className="text-base font-bold text-slate-900 dark:text-white">SentinelShield</h2>
+          <p className="text-[10px] text-slate-500 dark:text-slate-400">Advanced Security Platform</p>
+        </div>
       </div>
 
       {/* Right — status + theme + profile */}

@@ -1,6 +1,6 @@
 import {
   LayoutDashboard, Search, FileText,
-  BarChart3, Settings, Shield, LogOut,
+  BarChart3, Settings, Shield, LogOut, X,
 } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
@@ -15,7 +15,7 @@ const menuItems = [
   { name: "Settings",    icon: Settings,         path: "/settings" },
 ];
 
-const Sidebar = () => {
+const Sidebar = ({ onClose }: { onClose?: () => void }) => {
   const { user, logout, avatarId } = useAuth();
   const navigate = useNavigate();
 
@@ -25,10 +25,10 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="flex w-56 shrink-0 min-h-screen flex-col border-r border-slate-200 dark:border-white/10 bg-white dark:bg-slate-950/60 shadow-sm dark:shadow-none backdrop-blur-xl">
+    <aside className="flex w-64 shrink-0 min-h-screen flex-col border-r border-slate-200 dark:border-white/10 bg-white dark:bg-slate-950/95 shadow-sm dark:shadow-none backdrop-blur-xl">
 
-      {/* Logo */}
-      <div className="p-4">
+      {/* Logo + close button (mobile) */}
+      <div className="flex items-center justify-between p-4">
         <div className="flex items-center gap-2.5">
           <Shield size={26} className="text-sky-500" />
           <div>
@@ -36,6 +36,11 @@ const Sidebar = () => {
             <p className="text-[10px] text-slate-500 dark:text-slate-400">Security Platform</p>
           </div>
         </div>
+        {onClose && (
+          <button onClick={onClose} className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors lg:hidden">
+            <X size={16} />
+          </button>
+        )}
       </div>
 
       {/* Divider */}
@@ -55,6 +60,7 @@ const Sidebar = () => {
               <NavLink
                 to={item.path}
                 end={item.path === "/"}
+                onClick={onClose}
                 className={({ isActive }) =>
                   `mb-1 flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-medium transition-all ${
                     isActive
