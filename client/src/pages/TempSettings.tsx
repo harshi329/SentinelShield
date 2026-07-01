@@ -327,8 +327,8 @@ const Settings = () => {
                 <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                   <div className="flex items-center gap-3 p-4 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 mb-4">
                     <Mail size={16} className="text-violet-400 shrink-0" />
-                    <p className="text-sm text-slate-500 dark:text-slate-400">
-                      A one-time password will be sent to <span className="text-sky-400 font-semibold">{user?.email}</span>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 min-w-0">
+                      A one-time password will be sent to <span className="text-sky-400 font-semibold break-all">{user?.email}</span>
                     </p>
                   </div>
                   <AnimatePresence>{pwError && <ErrBanner msg={pwError} />}</AnimatePresence>
